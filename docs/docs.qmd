@@ -1,4 +1,18 @@
-# GridWest
+---
+title: "GridWest Documentation"
+author: Brayden Boyko
+format:
+  html:
+    code_folding: hide
+    self_contained: true
+    toc: true
+    search: true
+    dev: "png"
+    fig_embed: true
+    embed-resources: true
+execute:
+  echo: false
+---
 
 The GridWest Data Package is a comprehensive Python library designed to streamline access and processing of historical and real-time electricity market data across Western North America. This package currently supports data retrieval and management for four key regions:
 
@@ -38,6 +52,36 @@ Email: braydenboyko@boykowealth.com
 
 The following project is made available under the GPL.
 
-## Documentation
+
+## Alberta AESO
+
+### history()
+
+This module provides functionality to query and process historical time-series data from the Alberta Electric System Operator (AESO). It leverages AESO's CSV export endpoints and dynamically handles formatting of date and time data based on the report type.
+
+#### `from gridwest.ab import history`
+
+__Function:__ history(reportName, startDate, endDate)
+
+Fetches and processes historical data from AESO for a specified report and date range.
+
++ reportName (str): The name of the AESO report you wish to retrieve.
++ startDate (str): Start date in the format 'mmddyyyy'.
++ endDate (str): End date in the format 'mmddyyyy'.
+
+__Returns:__
+
+(pandas.DataFrame): A DataFrame containing the data from the requested report.
 
 
+#### Example 1: Pull secondary offer price limit data
+
+`history(reportName='Secondary Offer Price Limit', startDate='05012025', endDate='06022025')`
+
+#### Example 2: Retrieve historical pool price data
+
+`history(reportName='Pool Price', startDate='01012025', endDate='01312025')`
+
+#### Example 3: Retrieve TMR reference prices
+
+`history(reportName='TMR Reference Price', startDate='02012025', endDate='02282025')`
