@@ -108,3 +108,33 @@ def history(reportName=None, startDate=None, endDate=None):
         raise ValueError("❌ This report doesn't exist between these dates, please note some reports require no more than 31 days be requested at any time. Aditionally, please check your spelling or visit AESO.ca to view available reports.")
     
     return df
+
+def current(reportName=None):
+    x = 1
+
+def supplyForecasts(reportPeriod):
+    """
+    Pulls 24 Month Supply and Demand Forecasts From AESO.
+    ---
+
+    + reportPeriod: str, Forecast Period Required (Format: '1-6')
+        + '1-6': Daily Peak Hour (one month-six months)
+        + '2-6': Daily Peak Hour (two months-six months)
+        + '3-6': Daily Peak Hour (three months-six months)
+        + '4-6': Daily Peak Hour (four months-six months)
+
+    ---
+    Output: DataFrame, Forecasted Time Series
+    """
+
+    url = f'http://ets.aeso.ca/Market/Reports/Manual/supply_and_demand/csvData/{reportPeriod}month.csv'
+
+    try:
+        df = pd.read_csv(url, on_bad_lines='skip').dropna()
+        df = df.convert_dtypes()
+    except:
+        raise ValueError('Please provide a correct forecasting period.')
+    
+    return df
+
+
