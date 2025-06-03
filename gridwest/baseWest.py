@@ -28,7 +28,7 @@ def abHistoricalMapping(input=None):
         df = df[df['Report'] == input]
 
     if df.empty:
-        print("❌ This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
-        return None
+        
+        raise ValueError("❌ This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
 
     return df

@@ -1,30 +1,30 @@
-﻿Report,ReportID,Operational,Category,DateID
-"Metered Volumes (All)	",NA,0,Settlement,NA
-DDS Payment Summary Report,DdsPaymentSummaryReportServlet,1,Settlement,1
-DDS Charge Summary Report,DdsChargeSummaryReportServlet,1,Settlement,1
-Uplift Payment Summary Report,UpliftPaymentSummaryReportServlet,1,Settlement,1
-Uplift Charge Summary Report,UpliftChargeSummaryReportServlet,1,Settlement,1
-UC Settlement Summary Report,UCSettlementSummaryReportServlet,1,Settlement,1
-Actual Forecast,ActualForecastWMRQHReportServlet,1,Trading,2
-Pool Price,HistoricalPoolPriceReportServlet,1,Trading,2
-Pool Monthly Summary,NA,0,Trading,NA
-Daily Average Price,DailyAveragePoolPriceReportServlet,1,Trading,3
-System Marginal Price,HistoricalSystemMarginalPriceReportServlet,1,Trading,2
-Regulating Reserves,RegulatingReservesReportServlet,1,Trading,1
-TMR Reference Price,HistoricalTMRPriceReportServlet,1,Trading,3
-DDS Market,DDSMarketReportServlet,1,Trading,3
-DDS Historical Trading,NA,0,Trading,NA
-Merit Order Snapshot - Energy,MeritOrderSnapshotEnergyReportServlet,1,Trading,1
-Merit Order Snapshot - DDS,NA,0,Trading,NA
-Daily Market Report,NA,0,Trading,NA
-Weekly Market Report,NA ,0,Trading,NA
-AIES Event Log,HistoricalAIESReportServlet,1,Trading ,3
-Offer Control - Operating Reserve,OperatingReserveOfferControlReportServlet,1,Trading,1
-Estimated Cost of Constraint,HistoricalEstimatedConstraintCostReportServlet,1,Trading,2
-Secondary Offer Price Limit,HistoricalSOCReportServlet,1,Trading,4
-Monthly Cumulative Settlement Interval Net Revenue,HistoricalMCSINRReportServlet,1,Trading,2
-Unit Commitment Directives,UnitCommitmentReportServlet,1,Trading,5
-Daily OTC Transactions ,ASPDailyOTCTransactionReportServlet,1,As Trading,3
-Standby Activation,ASPActivationReportServlet,1,As Trading,1
-Standby Operating Reserve Price,ASPStandbyOperatingReservePriceReportServlet,1,As Trading,3
-Active Operating Reserve Price,ASPActiveOperatingReservePriceReportServlet,1,As Trading,3
+﻿Report,ReportID,Operational,Category,DateID,Row
+"Metered Volumes (All)	",NA,0,Settlement,NA,NA
+DDS Payment Summary Report,DdsPaymentSummaryReportServlet,1,Settlement,1,4
+DDS Charge Summary Report,DdsChargeSummaryReportServlet,1,Settlement,1,4
+Uplift Payment Summary Report,UpliftPaymentSummaryReportServlet,1,Settlement,1,4
+Uplift Charge Summary Report,UpliftChargeSummaryReportServlet,1,Settlement,1,4
+UC Settlement Summary Report,UCSettlementSummaryReportServlet,1,Settlement,1,4
+Actual Forecast,ActualForecastWMRQHReportServlet,1,Trading,2,4
+Pool Price,HistoricalPoolPriceReportServlet,1,Trading,2,4
+Pool Monthly Summary,NA,0,Trading,NA,NA
+Daily Average Price,DailyAveragePoolPriceReportServlet,1,Trading,3,4
+System Marginal Price,HistoricalSystemMarginalPriceReportServlet,1,Trading,2,1
+Regulating Reserves,RegulatingReservesReportServlet,1,Trading,1,4
+TMR Reference Price,HistoricalTMRPriceReportServlet,1,Trading,3,2
+DDS Market,DDSMarketReportServlet,1,Trading,3,2
+DDS Historical Trading,NA,0,Trading,NA,NA
+Merit Order Snapshot - Energy,NA,0,Trading,NA,NA
+Merit Order Snapshot - DDS,NA,0,Trading,NA,NA
+Daily Market Report,NA,0,Trading,NA,NA
+Weekly Market Report,NA ,0,Trading,NA,NA
+AIES Event Log,HistoricalAIESReportServlet,1,Trading ,3,3
+Offer Control - Operating Reserve,OperatingReserveOfferControlReportServlet,1,Trading,1,2
+Estimated Cost of Constraint,HistoricalEstimatedConstraintCostReportServlet,1,Trading,2,4
+Secondary Offer Price Limit,HistoricalSOCReportServlet,1,Trading,4,4
+Monthly Cumulative Settlement Interval Net Revenue,HistoricalMCSINRReportServlet,1,Trading,2,4
+Unit Commitment Directives,UnitCommitmentReportServlet,1,Trading,5,6
+Daily OTC Transactions ,ASPDailyOTCTransactionReportServlet,0,As Trading,3,NA
+Standby Activation,ASPActivationReportServlet,1,As Trading,1,5
+Standby Operating Reserve Price,ASPStandbyOperatingReservePriceReportServlet,1,As Trading,3,2
+Active Operating Reserve Price,ASPActiveOperatingReservePriceReportServlet,1,As Trading,3,2
