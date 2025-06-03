@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gridwest"
+version = "0.1.0"
+description = "A Python package for pulling power data from British Columbia, Alberta, Saskatchewan, and Montana."
+authors = [{name = "Brayden Boyko", email = "braydenboyko@boykowealth.com"}]
+license = {text = "GPL"}
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+    "pandas"
+]
+
+[tool.setuptools]
+packages = ["gridwest"]
