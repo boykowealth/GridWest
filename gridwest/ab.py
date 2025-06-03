@@ -87,26 +87,26 @@ def history(reportName=None, startDate=None, endDate=None):
             datePart = df["Effective Begin (HE)"].str.slice(0, 10)
             hourPart = df["Effective Begin (HE)"].str.slice(11, 13)
             mask24 = hourPart == "24"
-            date_fixed = pd.to_datetime(datePart, format="%m/%d/%Y")
+            date_fixed = pd.to_datetime(datePart, format="%m/%d/%Y", errors='coerce')
             date_fixed[mask24] += pd.Timedelta(days=1)
             hour_fixed = hourPart.where(~mask24, "00")
-            df["Effective Begin (HE)"] = pd.to_datetime(date_fixed.dt.strftime("%m/%d/%Y") + " " + hour_fixed, format="%m/%d/%Y %H")
+            df["Effective Begin (HE)"] = pd.to_datetime(date_fixed.dt.strftime("%m/%d/%Y") + " " + hour_fixed, format="%m/%d/%Y %H", errors="coerce")
 
             datePart = df["Effective End (HE)"].str.slice(0, 10)
             hourPart = df["Effective End (HE)"].str.slice(11, 13)
             mask24 = hourPart == "24"
-            date_fixed = pd.to_datetime(datePart, format="%m/%d/%Y")
+            date_fixed = pd.to_datetime(datePart, format="%m/%d/%Y", errors='coerce')
             date_fixed[mask24] += pd.Timedelta(days=1)
             hour_fixed = hourPart.where(~mask24, "00")
-            df["Effective End (HE)"] = pd.to_datetime(date_fixed.dt.strftime("%m/%d/%Y") + " " + hour_fixed, format="%m/%d/%Y %H")
+            df["Effective End (HE)"] = pd.to_datetime(date_fixed.dt.strftime("%m/%d/%Y") + " " + hour_fixed, format="%m/%d/%Y %H", errors="coerce")
 
             df_other = df.drop(columns=["Effective Begin (HE)", "Effective End (HE)"]).convert_dtypes()
             df = pd.concat([df[["Effective Begin (HE)", "Effective End (HE)"]], df_other], axis=1)
     elif reportDate == 5:
-        x = 1
+        df_other = df.convert_dtypes()
     else:
         raise ValueError("❌ This report doesn't exist between these dates, please note some reports require no more than 31 days be requested at any time. Aditionally, please check your spelling or visit AESO.ca to view available reports.")
     
     return df
 
-print(history(reportName='Secondary Offer Price Limit',startDate='11012023', endDate='12012023'))
+print(history(reportName='Secondary Offer Price Limit',startDate='05012025', endDate='06022025'))
