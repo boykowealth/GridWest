@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gridwest"
-version = "0.1.0"
+version = "0.2.0"
 description = "A Python package for pulling power data from British Columbia, Alberta, Saskatchewan, and Montana."
 authors = [{name = "Brayden Boyko", email = "braydenboyko@boykowealth.com"}]
 license = {text = "GPL"}

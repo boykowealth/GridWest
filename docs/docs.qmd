@@ -128,14 +128,14 @@ __Returns:__
 
 `current(reportName='Actual Forecast')`
 
-#### Complete List of Historical Report Options
+#### Complete List of Current Report Options
 
 ```{python}
 import pandas as pd
 import os
 from tabulate import tabulate
 
-df = pd.read_csv(r'https://raw.githubusercontent.com/boykowealth/GridWest/refs/heads/main/gridwest/map/abHistoricalMap.csv')
+df = pd.read_csv(r'https://raw.githubusercontent.com/boykowealth/GridWest/refs/heads/main/gridwest/map/abCurrentMap.csv')
 df = df[['Report', 'Operational', 'Category']]
 
 tabulate(df, headers='keys', tablefmt='html')

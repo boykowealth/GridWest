@@ -3067,6 +3067,7 @@ vertical-align: -.125em;
   <li><a href="#alberta-aeso" id="toc-alberta-aeso" class="nav-link" data-scroll-target="#alberta-aeso">Alberta AESO</a>
   <ul class="collapse">
   <li><a href="#history" id="toc-history" class="nav-link" data-scroll-target="#history">history()</a></li>
+  <li><a href="#current" id="toc-current" class="nav-link" data-scroll-target="#current">current()</a></li>
   <li><a href="#supplyforecasts" id="toc-supplyforecasts" class="nav-link" data-scroll-target="#supplyforecasts">supplyForecasts()</a></li>
   </ul></li>
   </ul>
@@ -3165,8 +3166,8 @@ vertical-align: -.125em;
 </section>
 <section id="complete-list-of-historical-report-options" class="level4">
 <h4 class="anchored" data-anchor-id="complete-list-of-historical-report-options">Complete List of Historical Report Options</h4>
-<div id="4e940788" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div id="5a9ceaa6" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -3348,6 +3349,177 @@ vertical-align: -.125em;
 <tr class="odd">
 <td style="text-align: right;">28</td>
 <td>Active Operating Reserve Price</td>
+<td style="text-align: right;">1</td>
+<td>As Trading</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="current" class="level3">
+<h3 class="anchored" data-anchor-id="current">current()</h3>
+<p>This module provides functionality to query and process current time-series data from the Alberta Electric System Operator (AESO). It leverages AESO’s CSV export endpoints and dynamically handles formatting of date and time data based on the report type.</p>
+<section id="from-gridwest.ab-import-current" class="level4">
+<h4 class="anchored" data-anchor-id="from-gridwest.ab-import-current"><code>from gridwest.ab import current</code></h4>
+<p><strong>Function:</strong> current(reportName)</p>
+<p>Fetches and processes historical data from AESO for a specified report and date range.</p>
+<ul>
+<li>reportName (str): The name of the AESO report you wish to retrieve.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>(pandas.DataFrame): A DataFrame containing the data from the requested report.</p>
+</section>
+<section id="example-1-retrieve-monthly-outage-data" class="level4">
+<h4 class="anchored" data-anchor-id="example-1-retrieve-monthly-outage-data">Example 1: Retrieve monthly outage data</h4>
+<p><code>current(reportName=&#39;Monthly Outage&#39;)</code></p>
+</section>
+<section id="example-2-retrieve-pool-price-data" class="level4">
+<h4 class="anchored" data-anchor-id="example-2-retrieve-pool-price-data">Example 2: Retrieve pool price data</h4>
+<p><code>current(reportName=&#39;Pool Price&#39;)</code></p>
+</section>
+<section id="example-3-retrieve-actualforecast-data" class="level4">
+<h4 class="anchored" data-anchor-id="example-3-retrieve-actualforecast-data">Example 3: Retrieve actual/forecast data</h4>
+<p><code>current(reportName=&#39;Actual Forecast&#39;)</code></p>
+</section>
+<section id="complete-list-of-current-report-options" class="level4">
+<h4 class="anchored" data-anchor-id="complete-list-of-current-report-options">Complete List of Current Report Options</h4>
+<div id="e8cdc5aa" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Report</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Operational</th>
+<th data-quarto-table-cell-role="th">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>Actual Forecast</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>AIES Event Log</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>Pool Price</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>System Marginal Price</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>Current Supply &amp; Demand</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>Asset List</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>Pool Participant List</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td>Daily Average Price</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td>Monthly Outage</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td>TMR Reference Price</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td>DDS Market</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td>Supply Adequacy &amp; Market Supply Cushion</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td>Supply Surplus</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td>Peak Load Forecast Report</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td>7 Days Hourly Available Capability</td>
+<td style="text-align: right;">0</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td>Daily Outage</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td>Estimated Cost of Constraint</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17</td>
+<td>Secondary Offer Price Limit</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td>Monthly Cumulative Settlement Interval Net Revenue</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td>Unit Commitment Directives</td>
+<td style="text-align: right;">1</td>
+<td>Trading</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td>Volume Forecast</td>
 <td style="text-align: right;">1</td>
 <td>As Trading</td>
 </tr>

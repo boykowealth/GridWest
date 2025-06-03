@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: gridwest
-Version: 0.1.0
+Version: 0.2.0
 Summary: A Python package for pulling power data from British Columbia, Alberta, Saskatchewan, and Montana.
 Author-email: Brayden Boyko <braydenboyko@boykowealth.com>
 License: GPL
