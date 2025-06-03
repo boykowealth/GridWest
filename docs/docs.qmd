@@ -99,6 +99,48 @@ df = df[['Report', 'Operational', 'Category']]
 tabulate(df, headers='keys', tablefmt='html')
 ```
 
+### current()
+
+This module provides functionality to query and process current time-series data from the Alberta Electric System Operator (AESO). It leverages AESO's CSV export endpoints and dynamically handles formatting of date and time data based on the report type.
+
+#### `from gridwest.ab import current`
+
+__Function:__ current(reportName)
+
+Fetches and processes historical data from AESO for a specified report and date range.
+
++ reportName (str): The name of the AESO report you wish to retrieve.
+
+__Returns:__
+
+(pandas.DataFrame): A DataFrame containing the data from the requested report.
+
+
+#### Example 1: Retrieve monthly outage data
+
+`current(reportName='Monthly Outage')`
+
+#### Example 2: Retrieve pool price data
+
+`current(reportName='Pool Price')`
+
+#### Example 3: Retrieve actual/forecast data
+
+`current(reportName='Actual Forecast')`
+
+#### Complete List of Historical Report Options
+
+```{python}
+import pandas as pd
+import os
+from tabulate import tabulate
+
+df = pd.read_csv(r'https://raw.githubusercontent.com/boykowealth/GridWest/refs/heads/main/gridwest/map/abHistoricalMap.csv')
+df = df[['Report', 'Operational', 'Category']]
+
+tabulate(df, headers='keys', tablefmt='html')
+```
+
 ### supplyForecasts()
 
 This function retrieves 24-month supply and demand forecast data published by the Alberta Electric System Operator (AESO). The forecast data includes estimates for daily peak hour conditions over different future time horizons.

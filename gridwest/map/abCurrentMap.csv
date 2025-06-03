@@ -1,0 +1,22 @@
+﻿Report,ReportID,Operational,Category,DateID,Row
+Actual Forecast,ActualForecastWMRQHReportServlet,1,Trading,2,4
+AIES Event Log,RealTimeShiftReportServlet,1,Trading,2,3
+Pool Price,SMPriceReportServlet,1,Trading,2,4
+System Marginal Price,CSMPriceReportServlet,1,Trading,2,5
+Current Supply & Demand,NA,0,Trading ,NA,NA
+Asset List,AssetListReportServlet,1,Trading,0,2
+Pool Participant List,ParticipantListReportServlet,0,Trading,NA,NA
+Daily Average Price,DailyAveragePoolPriceReportServlet,1,Trading,3,4
+Monthly Outage,MonthlyOutageForecastReportServlet,1,Trading,4,5
+TMR Reference Price,TMRPriceReportServlet,1,Trading,3,2
+DDS Market,NA,0,Trading,NA,NA
+Supply Adequacy & Market Supply Cushion,NA,0,Trading,NA,NA
+Supply Surplus,NA,0,Trading,NA,NA
+Peak Load Forecast Report,NA,0,Trading,NA,NA
+7 Days Hourly Available Capability,NA,0,Trading,NA,NA
+Daily Outage,DailyOutageReportServlet,1,Trading,3,6
+Estimated Cost of Constraint,EstimatedConstraintCostReportServlet,1,Trading,2,4
+Secondary Offer Price Limit,CurrentSOCReportServlet,1,Trading,5,4
+Monthly Cumulative Settlement Interval Net Revenue,MCSINRReportServlet,1,Trading,2,4
+Unit Commitment Directives,UnitCommitmentCurrentReportServlet,1,Trading,0,6
+Volume Forecast,ASPForecastReportServlet,1,As Trading,1,5

@@ -29,6 +29,29 @@ def abHistoricalMapping(input=None):
 
     if df.empty:
         
-        raise ValueError("❌ This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
+        raise ValueError("This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
+
+    return df
+
+def abCurrentMapping(input=None):
+    """
+    Base Function - Name Mapping
+    ---
+    + input: str, AESO Website Report Name (Format: 'Pool Price')
+    ---
+    Output: str, Backend Mapping ID For Data Download
+    """
+
+    current_dir = os.path.dirname(__file__)
+    csv_path = os.path.join(current_dir, 'map', 'abCurrentMap.csv')
+    df = pd.read_csv(csv_path)
+    df = df[df['Operational'] == 1]
+
+    if input:
+        df = df[df['Report'] == input]
+
+    if df.empty:
+        
+        raise ValueError("This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
 
     return df
