@@ -108,5 +108,3 @@ def history(reportName=None, startDate=None, endDate=None):
         raise ValueError("❌ This report doesn't exist between these dates, please note some reports require no more than 31 days be requested at any time. Aditionally, please check your spelling or visit AESO.ca to view available reports.")
     
     return df
-
-print(history(reportName='Secondary Offer Price Limit',startDate='05012025', endDate='06022025'))
