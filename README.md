@@ -20,7 +20,7 @@ Whether you're assessing historical price trends, load forecasts, or ancillary s
 + __Alberta (gridwest.ab):__ Accesses AESO (Alberta Electric System Operator) historical and operational reports. Handles multiple report types with varying date/time formats. Provides flexible querying by report name and date range.
 + __Saskatchewan (gridwest.sk):__ Interfaces with SaskPower's public data portals and report feeds. Standardizes load, generation, and price datasets. Supports time-series extraction and cleaning.
 + __British Columbia (gridwest.bc):__ Pulls data from BC Hydro and BC Utilities commission sources. Manages multiple data formats and interval types. Converts timestamps and adjusts for time zone differences.
-+ __Montana (gridwest.mt):__ Connects to NorthWestern Energy and MISO public datasets.Aggregates generation, demand, and pricing information. Normalizes data for use in cross-border market analysis.
++ __Montana (gridwest.mt):__ Connects to Southwest Power Pool (SPP) public datasets.Aggregates generation, demand, and pricing information. Normalizes data for use in cross-border market analysis.
 
 ## Installation
 
@@ -40,4 +40,5 @@ The following project is made available under the GPL.
 
 ## Documentation
 
+[⬇️ Download docs](https://github.com/boykowealth/GridWest/releases/download/Docs/docs.html)
 
