@@ -1,5 +1,5 @@
 ## FILE: ab.py 
-## USE: Alberta Region Data
+## USE: Alberta Region Data (Via AESO)
 
 from baseWest import abHistoricalMapping, abSource, abCurrentMapping, abSDtMapping
 
@@ -229,7 +229,6 @@ def supplyForecasts(reportPeriod):
         raise ValueError('Please provide a correct forecasting period.')
     
     return df
-
 
 def currentSD():
     """
