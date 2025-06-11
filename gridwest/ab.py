@@ -1,10 +1,12 @@
 ## FILE: ab.py 
 ## USE: Alberta Region Data
 
-from baseWest import abHistoricalMapping, abSource, abCurrentMapping
+from baseWest import abHistoricalMapping, abSource, abCurrentMapping, abSDtMapping
 
 import pandas as pd
 from datetime import datetime as dt
+import requests
+from bs4 import BeautifulSoup
 
 def history(reportName=None, startDate=None, endDate=None):
     """
@@ -203,8 +205,6 @@ def current(reportName=None):
 
     return df
 
-print(current(reportName='Actual Forecast'))
-
 def supplyForecasts(reportPeriod):
     """
     Pulls 24 Month Supply and Demand Forecasts From AESO.
@@ -228,4 +228,51 @@ def supplyForecasts(reportPeriod):
     except:
         raise ValueError('Please provide a correct forecasting period.')
     
+    return df
+
+
+def currentSD():
+    """
+    Pulls The Current Supply Demand Report (GROUP, MC, TNG, DCR) From AESO.
+    ---
+    Output: DataFrame, Supply and Deman Measures Per Group/Type
+    """
+    url = "http://ets.aeso.ca/ets_web/ip/Market/Reports/CSDReportServlet"
+    response = requests.get(url, timeout=10)
+
+    if response.status_code != 200:
+        raise f"Error: Connection Status code {response.status_code}"
+    
+    soup = BeautifulSoup(response.content, "html.parser")
+    tables = soup.find_all("table")
+
+    data = []
+    for table in tables:
+        rows = table.find_all("tr")
+        for row in rows:
+            cols = row.find_all("td")
+            cols = [col.text.strip() for col in cols]
+            if cols:
+                data.append(cols)
+
+    if not data:
+        raise "No Current data found."
+    
+    data = data[20:]
+
+    df = pd.DataFrame(data)
+    df.columns = df.iloc[0] 
+    df = df[1:].reset_index(drop=True)
+    df = df[['GROUP', 'MC', 'TNG', 'DCR']]
+    df = df[df['GROUP'] != 'ASSET']
+
+    mapsd = abSDtMapping()
+
+    df = pd.merge(df, mapsd, how='left', on='GROUP')
+
+    df['GROUP'] = df['GROUP'].str.title()
+    df['MC'] = pd.to_numeric(df['MC'], errors='coerce')
+    df['TNG'] = pd.to_numeric(df['TNG'], errors='coerce')
+    df['DCR'] = pd.to_numeric(df['DCR'], errors='coerce')
+
     return df

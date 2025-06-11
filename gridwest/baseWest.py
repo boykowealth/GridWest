@@ -55,3 +55,16 @@ def abCurrentMapping(input=None):
         raise ValueError("This report does not exist or is not currently operational. Please check your spelling or visit AESO.ca to view available reports.")
 
     return df
+
+def abSDtMapping():
+    """
+    Base Function - Name Mapping
+    ---
+    Output: str, Backend Mapping ID For Data Download
+    """
+
+    current_dir = os.path.dirname(__file__)
+    csv_path = os.path.join(current_dir, 'map', 'abSDMap.csv')
+    df = pd.read_csv(csv_path)
+
+    return df

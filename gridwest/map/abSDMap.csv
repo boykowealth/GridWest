@@ -1,0 +1,234 @@
+﻿GROUP,TYPE
+COGENERATION,GENERATION
+WIND,GENERATION
+COMBINED CYCLE,GENERATION
+GAS FIRED STEAM,GENERATION
+SOLAR,GENERATION
+SIMPLE CYCLE,GENERATION
+HYDRO,GENERATION
+OTHER,GENERATION
+ENERGY STORAGE,GENERATION
+TOTAL,GENERATION
+AB Newsprint (ANC1),GAS
+Bantry (ALP1),GAS
+Bellshill (BHL1),GAS
+Benalto 1 (VBN1),GAS
+Briker 1 (VBR1),GAS
+Carson Creek (GEN5),GAS
+Cloverbar #1 (ENC1),GAS
+Cloverbar #2 (ENC2),GAS
+Cloverbar #3 (ENC3),GAS
+Crossfield Energy Centre #1 (CRS1),GAS
+Crossfield Energy Centre #2 (CRS2),GAS
+Crossfield Energy Centre #3 (CRS3)^,GAS
+Drywood (DRW1),GAS
+High River 1 (HRV1),GAS
+High River 2 (HRV2),GAS
+Judy Creek (GEN6),GAS
+Kenilworth 1 (VKW1),GAS
+Lethbridge Burdett (ME03),GAS
+Lethbridge Coaldale (ME04),GAS
+Lethbridge Taber (ME02),GAS
+NPC2 JL Landry (NPC2),GAS
+NPC3 Elmworth (NPC3),GAS
+Netook 1 (VNT1),GAS
+Northern Prairie Power Project (NPP1),GAS
+Northern Valley 1 (VNV1),GAS
+Parkland (ALP2),GAS
+Poplar Hill #1 (PH1),GAS
+Rainbow #5 (RB5),GAS
+Ralston (NAT1),GAS
+South Edmonton Terminal (SET1),GAS
+Valley View 1 (VVW1),GAS
+Valley View 2 (VVW2),GAS
+West Cadotte (WCD1),GAS
+West Pembina (PMB1)*,GAS
+Wilson Creek (WLC1),GAS
+Air Liquide Scotford #1 (ALS1),GAS
+AltaGas Harmattan (HMT1),GAS
+Base Plant (SCR1),GAS
+Bear Creek 1 (BCRK),GAS
+Bear Creek 2 (BCR2),GAS
+Blackfalds (BFD1),GAS
+CNRL Horizon (CNR5)*,GAS
+COD1 Coaldale (COD1),GAS
+Camrose (CRG1)*,GAS
+Caroline (SHCG)*,GAS
+Carseland Cogen (TC01),GAS
+Christina Lake (CL01),GAS
+Dow Hydrocarbon (DOWG),GAS
+Edson (TLM2),GAS
+Empress (EPS1)*,GAS
+Firebag (SCR6),GAS
+Fort Hills (FH1),GAS
+Foster Creek (EC04),GAS
+Heartland Petrochemical (HRT1),GAS
+Joffre #1 (JOF1),GAS
+Kearl (IOR3),GAS
+Lindbergh (PEC1)*,GAS
+MEG1 Christina Lake (MEG1),GAS
+MacKay River (MKRC),GAS
+Mahkeses (IOR1),GAS
+Mulligan (MUL1)*,GAS
+Muskeg River (MKR1),GAS
+Nabiye (IOR2)*,GAS
+Nexen Inc #2 (NX02),GAS
+Poplar Creek (SCR5),GAS
+Primrose #1 (PR1),GAS
+Rainbow Lake #1 (RL1),GAS
+Redwater Cogen (TC02),GAS
+Saddle Hills (SDH1),GAS
+Scotford Upgrader (APS1),GAS
+Strathcona (IOR4)*,GAS
+Syncrude #1 (SCL1),GAS
+U of C Generator (UOC1)*,GAS
+University of Alberta (UOA1)*,GAS
+Wapiti (WPT1)*,GAS
+Wembley (WEM1)*,GAS
+Cascade 1 (CAS1),GAS
+Cascade 2 (CAS2),GAS
+Cavalier (EC01),GAS
+ENMAX Calgary Energy Centre (CAL1),GAS
+Fort Nelson (FNG1),GAS
+Genesee Repower 1 (GNR1),GAS
+Genesee Repower 2 (GNR2),GAS
+H.R. Milner (HRM),GAS
+Medicine Hat #1 (CMH1),GAS
+Nexen Inc #1 (NX01),GAS
+Shepard (EGC1),GAS
+Battle River #4 (BR4),GAS
+Battle River #5 (BR5),GAS
+Genesee #3 (GN3),GAS
+Keephills #2 (KH2),GAS
+Keephills #3 (KH3),GAS
+Sheerness #1 (SH1),GAS
+Sheerness #2 (SH2),GAS
+Sundance #6 (SD6),GAS
+Bighorn Hydro (BIG),HYDRO
+Bow River Hydro (BOW1),HYDRO
+Brazeau Hydro (BRA),HYDRO
+Chin Chute (CHIN),HYDRO
+Dickson Dam (DKSN),HYDRO
+Irrican Hydro (ICP1),HYDRO
+Oldman River (OMRH),HYDRO
+Raymond Reservoir (RYMD)^,HYDRO
+Taylor Hydro (TAY1),HYDRO
+Summerview (SUM1),ENERGY STORAGE
+eReserve1 Rycroft (ERV1),ENERGY STORAGE
+eReserve2 Buffalo Creek (ERV2),ENERGY STORAGE
+eReserve3 Mercer Hill (ERV3),ENERGY STORAGE
+eReserve4 (ERV4),ENERGY STORAGE
+eReserve5 Hughenden (ERV5),ENERGY STORAGE
+eReserve6 (ERV6),ENERGY STORAGE
+eReserve7 (ERV7),ENERGY STORAGE
+eReserve8 (ERV8),ENERGY STORAGE
+eReserve9 (ERV9),ENERGY STORAGE
+BRD1 Burdett (BRD1),SOLAR
+BUR1 Burdett (BUR1),SOLAR
+Barlow Solar (BLS1),SOLAR
+Big Sky Solar (ACD1),SOLAR
+Brooks Solar (BSC1),SOLAR
+Brooks Solar 1 (BRK1),SOLAR
+Brooks Solar 2 (BRK2),SOLAR
+COL1 Coaldale (COL1)^,SOLAR
+Chappice Lake (CHP1)^,SOLAR
+Claresholm 1 (CLR1),SOLAR
+Claresholm 2 (CLR2),SOLAR
+Clydesdale 1 (CLY1),SOLAR
+Clydesdale 2 (CLY2),SOLAR
+Conrad 1 (CRD1),SOLAR
+Conrad 2 (CRD2),SOLAR
+Deerfoot (DFT1),SOLAR
+East Strathmore Namaka (NMK1),SOLAR
+Empress Solar Park (EMP1),SOLAR
+Fox Coulee Solar (FCS1),SOLAR
+Gleichen Solar (GLE1),SOLAR
+Hays (HYS1),SOLAR
+Hull (HUL1),SOLAR
+Innisfail (INF1),SOLAR
+Jenner (JER1),SOLAR
+Joffre Solar 1 (JFS1),SOLAR
+Joffre Solar 2 (JFS2),SOLAR
+Kneehill Solar (TRH1),SOLAR
+Lethbridge Solar (CLD1),SOLAR
+Michichi Creek (MCH1)^,SOLAR
+Michichi Solar (MIC1),SOLAR
+Monarch (MON1)^,SOLAR
+Saddlebrook Solar (SDL1),SOLAR
+Sollair Solar Energy Plant (SLR1),SOLAR
+Spring Coulee (SGC1),SOLAR
+Stavely (STV1),SOLAR
+Strathmore 1 (STR1),SOLAR
+Strathmore 2 (STR2),SOLAR
+Suffield (SUF1),SOLAR
+Travers (TVS1),SOLAR
+Vauxhall (VXH1),SOLAR
+Vulcan (VCN1)^,SOLAR
+Westfield Yellow Lake (WEF1),SOLAR
+Wheatcrest (WCR1),SOLAR
+Youngstown Solar (YNG1),SOLAR
+kisikaw-pisim 1 (KKP1)*^,SOLAR
+kisikaw-pisim 2 (KKP2)*^,SOLAR
+Ardenville Wind (ARD1)*,WIND
+BUL1 Bull Creek (BUL1)*,WIND
+BUL2 Bull Creek (BUL2)*,WIND
+Blackspring Ridge (BSR1)*,WIND
+Blue Trail Wind (BTR1)*,WIND
+Buffalo Atlee 1 (BFL1)*,WIND
+Buffalo Atlee 2 (BFL2)*,WIND
+Buffalo Atlee 3 (BFL3)*,WIND
+Buffalo Atlee 4 (BFL4)*,WIND
+Buffalo Plains (BPW1)*,WIND
+Castle River #1 (CR1)*,WIND
+Castle Rock Ridge 2 (CRR2)*,WIND
+Castle Rock Wind Farm (CRR1)*,WIND
+Cowley Ridge (CRE3)*,WIND
+Cypress 1 (CYP1)*,WIND
+Cypress 2 (CYP2)*,WIND
+Enmax Taber (TAB1)*,WIND
+Forty Mile Bow Island (FRM1)*,WIND
+Forty Mile Granlea (FMG1)*,WIND
+Garden Plain (GDP1)*,WIND
+Ghost Pine (NEP1)*,WIND
+Grizzly Bear (GRZ1)*,WIND
+Halkirk 2 (HAL2)*,WIND
+Halkirk Wind Power Facility (HAL1)*,WIND
+Hand Hills (HHW1)*,WIND
+Hilda Wind (HLD1)*,WIND
+Jenner 1 (JNR1)*,WIND
+Jenner 2 (JNR2)*,WIND
+Jenner 3 (JNR3)*,WIND
+Kettles Hill (KHW1)*,WIND
+Lanfine Wind (LAN1)*,WIND
+McBride Lake Windfarm (AKE1)*,WIND
+Oldman 2 Wind Farm 1 (OWF1)*,WIND
+Paintearth Wind Project (PAW1)*,WIND
+Rattlesnake Ridge Wind (RTL1)*,WIND
+Riverview (RIV1)*,WIND
+Sharp Hill Wind (SHH1)*,WIND
+Soderglen Wind (GWW1)*,WIND
+Stirling Wind (SWP1)*,WIND
+Summerview 1 (IEW1)*,WIND
+Summerview 2 (IEW2)*,WIND
+Suncor Chin Chute (SCR3)*,WIND
+Suncor Magrath (SCR2)*,WIND
+Wheatland Wind (WHE1)*,WIND
+Whitla 1 (WHT1)*,WIND
+Whitla 2 (WHT2)*,WIND
+Wild Rose (WIR1),WIND
+Windrise (WRW1)*,WIND
+Winnifred Wind (WIN1),WIND
+Wintering Hills (SCR4)*,WIND
+APF Athabasca (AFG1)*,BIOMASS AND OTHER
+Bonnybrook (BON1)*,BIOMASS AND OTHER
+Cancarb Medicine Hat (CCMH),BIOMASS AND OTHER
+DAI1 Daishowa (DAI1)*,BIOMASS AND OTHER
+Gold Creek Facility (GOC1),BIOMASS AND OTHER
+Grande Prairie EcoPower (GPEC),BIOMASS AND OTHER
+NRGreen (NRG3),BIOMASS AND OTHER
+Slave Lake (SLP1)*,BIOMASS AND OTHER
+Swan Hills Geothermal (SRL1),BIOMASS AND OTHER
+Weldwood #1 (WWD1)*,BIOMASS AND OTHER
+Westlock (WST1)*,BIOMASS AND OTHER
+Weyerhaeuser (WEY1),BIOMASS AND OTHER
+Whitecourt Power (EAGL),BIOMASS AND OTHER

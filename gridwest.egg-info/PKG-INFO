@@ -9,6 +9,7 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: requests
 Requires-Dist: pandas
+Requires-Dist: datetime
 Dynamic: license-file
 
 # GridWest

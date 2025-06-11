@@ -3069,6 +3069,7 @@ vertical-align: -.125em;
   <li><a href="#history" id="toc-history" class="nav-link" data-scroll-target="#history">history()</a></li>
   <li><a href="#current" id="toc-current" class="nav-link" data-scroll-target="#current">current()</a></li>
   <li><a href="#supplyforecasts" id="toc-supplyforecasts" class="nav-link" data-scroll-target="#supplyforecasts">supplyForecasts()</a></li>
+  <li><a href="#currentsd" id="toc-currentsd" class="nav-link" data-scroll-target="#currentsd">currentSD()</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3119,7 +3120,7 @@ vertical-align: -.125em;
 <li><strong>Alberta (gridwest.ab):</strong> Accesses AESO (Alberta Electric System Operator) historical and operational reports. Handles multiple report types with varying date/time formats. Provides flexible querying by report name and date range.</li>
 <li><strong>Saskatchewan (gridwest.sk):</strong> Interfaces with SaskPower’s public data portals and report feeds. Standardizes load, generation, and price datasets. Supports time-series extraction and cleaning.</li>
 <li><strong>British Columbia (gridwest.bc):</strong> Pulls data from BC Hydro and BC Utilities commission sources. Manages multiple data formats and interval types. Converts timestamps and adjusts for time zone differences.</li>
-<li><strong>Montana (gridwest.mt):</strong> Connects to NorthWestern Energy and MISO public datasets.Aggregates generation, demand, and pricing information. Normalizes data for use in cross-border market analysis.</li>
+<li><strong>Montana (gridwest.mt):</strong> Connects to NorthWestern Energy and MISO public datasets. Aggregates generation, demand, and pricing information. Normalizes data for use in cross-border market analysis.</li>
 </ul>
 </section>
 <section id="installation" class="level2">
@@ -3166,7 +3167,7 @@ vertical-align: -.125em;
 </section>
 <section id="complete-list-of-historical-report-options" class="level4">
 <h4 class="anchored" data-anchor-id="complete-list-of-historical-report-options">Complete List of Historical Report Options</h4>
-<div id="5a9ceaa6" class="cell" data-execution_count="1">
+<div id="aec9cbc8" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -3385,7 +3386,7 @@ vertical-align: -.125em;
 </section>
 <section id="complete-list-of-current-report-options" class="level4">
 <h4 class="anchored" data-anchor-id="complete-list-of-current-report-options">Complete List of Current Report Options</h4>
-<div id="e8cdc5aa" class="cell" data-execution_count="2">
+<div id="b45baebf" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -3552,6 +3553,22 @@ vertical-align: -.125em;
 <section id="example-retrieve-the-46-month-supply-demand-forecast" class="level4">
 <h4 class="anchored" data-anchor-id="example-retrieve-the-46-month-supply-demand-forecast">Example: Retrieve the 4–6 Month Supply &amp; Demand Forecast</h4>
 <p><code>df = supplyForecasts(&#39;4-6&#39;)</code></p>
+</section>
+</section>
+<section id="currentsd" class="level3">
+<h3 class="anchored" data-anchor-id="currentsd">currentSD()</h3>
+<p>This function provides the current Supply Demand Report (GROUP, MC, TNG, DCR) From AESO.</p>
+<section id="from-gridwest.ab-import-currentsd" class="level4">
+<h4 class="anchored" data-anchor-id="from-gridwest.ab-import-currentsd"><code>from gridwest.ab import currentSD</code></h4>
+<p><strong>Function:</strong> currentSD()</p>
+</section>
+<section id="returns-1" class="level4">
+<h4 class="anchored" data-anchor-id="returns-1">Returns</h4>
+<p>pandas.DataFrame: A clean DataFrame containing the current Supply Demand Report (GROUP, MC, TNG, DCR) From AESO.</p>
+</section>
+<section id="example-retrieve-the-current-supply-demand-report" class="level4">
+<h4 class="anchored" data-anchor-id="example-retrieve-the-current-supply-demand-report">Example: Retrieve the current Supply Demand Report</h4>
+<p><code>df = currentSD()</code></p>
 </section>
 </section>
 </section>
