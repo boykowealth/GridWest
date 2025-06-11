@@ -3,9 +3,9 @@
 The GridWest Data Package is a comprehensive Python library designed to streamline access and processing of historical and real-time electricity market data across Western North America. This package currently supports data retrieval and management for four key regions:
 
 + Alberta (AESO)
-+ Saskatchewan (SaskPower)
-+ British Columbia (BC Hydro / BC Utilities)
-+ Montana (NorthWestern Energy / MISO)
++ Saskatchewan (SaskPower - Crown Corporation)
++ British Columbia (BC Hydro - Crown Corporation)
++ Montana (SPP)
 
 It provides traders, analysts, and energy professionals with easy-to-use functions to pull, clean, and analyze power market time-series data crucial for trading, risk management, and operational decision-making.
 
