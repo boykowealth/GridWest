@@ -3,9 +3,9 @@
             const regionName = simulationData[region].name;
             let forecastText = `7-Day Forecast for Zone ${region} (${regionName}):\n\n`;
             
-            for (let day = 1; day <= 7; day++) {
+            for (let day = 1; day &lt;= 7; day++) {
                 forecastText += `Day ${day}:\n`;
-                for (let hour = 1; hour <= 24; hour++) {
+                for (let hour = 1; hour &lt;= 24; hour++) {
                     let demand;
                     switch(region) {
                         case 'A':
@@ -14,12 +14,13 @@
                         case 'B':
                             demand = Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12));
                             break<!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Power Trading Simulator</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Real-Time Power Trading Simulator</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -303,254 +304,240 @@
             }
         }
     </style>
-</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>⚡ Real-Time Power Trading Simulator</h1>
-            <div class="time-display">
-                <span class="status-indicator status-online"></span>
+<div class="container">
+<div class="header">
+<h1>⚡ Real-Time Power Trading Simulator</h1>
+<div class="time-display">
+<span class="status-indicator status-online"></span>
                 Hour Ending: <span id="currentHour">1</span> / 24
             </div>
-            <div class="region-selector">
-                <label for="regionSelect">Select Region:</label>
-                <select id="regionSelect">
-                    <option value="A">Zone A (North)</option>
-                    <option value="B">Zone B (East)</option>
-                    <option value="C">Zone C (South)</option>
-                    <option value="D">Zone D (West)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <div class="card">
-                <h3>📊 Market Data - <span id="currentRegion">Zone A</span></h3>
-                <div class="market-data">
-                    <div class="metric">
-                        <div class="metric-value" id="demand">0</div>
-                        <div class="metric-label">Demand (MW)</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" id="solar">0</div>
-                        <div class="metric-label">Solar (MW)</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" id="wind">0</div>
-                        <div class="metric-label">Wind (MW)</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" id="lmp">$0</div>
-                        <div class="metric-label">LMP ($/MWh)</div>
-                    </div>
-                </div>
-                <div class="price-chart" id="priceChart">
+<div class="region-selector">
+<label for="regionSelect">Select Region:</label>
+<select id="regionSelect">
+<option value="A">Zone A (North)</option>
+<option value="B">Zone B (East)</option>
+<option value="C">Zone C (South)</option>
+<option value="D">Zone D (West)</option>
+</select>
+</div>
+</div>
+<div class="dashboard">
+<div class="card">
+<h3>📊 Market Data - <span id="currentRegion">Zone A</span></h3>
+<div class="market-data">
+<div class="metric">
+<div class="metric-value" id="demand">0</div>
+<div class="metric-label">Demand (MW)</div>
+</div>
+<div class="metric">
+<div class="metric-value" id="solar">0</div>
+<div class="metric-label">Solar (MW)</div>
+</div>
+<div class="metric">
+<div class="metric-value" id="wind">0</div>
+<div class="metric-label">Wind (MW)</div>
+</div>
+<div class="metric">
+<div class="metric-value" id="lmp">$0</div>
+<div class="metric-label">LMP ($/MWh)</div>
+</div>
+</div>
+<div class="price-chart" id="priceChart">
                     📈 Real-time Price Visualization
                 </div>
-            </div>
-
-            <div class="card">
-                <h3>🔌 Transmission Network</h3>
-                <div class="transmission-grid">
-                    <div class="transmission-line" id="lineA-B">
-                        <div class="line-header">A ↔ B</div>
-                        <div class="line-capacity">Cap: <span id="capA-B">100</span> MW</div>
-                        <div class="line-status" id="statusA-B">Normal</div>
-                    </div>
-                    <div class="transmission-line" id="lineA-C">
-                        <div class="line-header">A ↔ C</div>
-                        <div class="line-capacity">Cap: <span id="capA-C">80</span> MW</div>
-                        <div class="line-status" id="statusA-C">Normal</div>
-                    </div>
-                    <div class="transmission-line" id="lineB-D">
-                        <div class="line-header">B ↔ D</div>
-                        <div class="line-capacity">Cap: <span id="capB-D">120</span> MW</div>
-                        <div class="line-status" id="statusB-D">Normal</div>
-                    </div>
-                    <div class="transmission-line" id="lineC-D">
-                        <div class="line-header">C ↔ D</div>
-                        <div class="line-capacity">Cap: <span id="capC-D">90</span> MW</div>
-                        <div class="line-status" id="statusC-D">Normal</div>
-                    </div>
-                </div>
-                <div class="market-data" style="margin-top: 15px;">
-                    <div class="metric">
-                        <div class="metric-value" id="traderLoad">0</div>
-                        <div class="metric-label">Trader Load (MW)</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value" id="systemCongestion">0</div>
-                        <div class="metric-label">Congested Lines</div>
-                    </div>
-                </div>
-                <div id="congestionWarning" class="congestion-warning" style="display: none;">
+</div>
+<div class="card">
+<h3>🔌 Transmission Network</h3>
+<div class="transmission-grid">
+<div class="transmission-line" id="lineA-B">
+<div class="line-header">A ↔ B</div>
+<div class="line-capacity">Cap: <span id="capA-B">100</span> MW</div>
+<div class="line-status" id="statusA-B">Normal</div>
+</div>
+<div class="transmission-line" id="lineA-C">
+<div class="line-header">A ↔ C</div>
+<div class="line-capacity">Cap: <span id="capA-C">80</span> MW</div>
+<div class="line-status" id="statusA-C">Normal</div>
+</div>
+<div class="transmission-line" id="lineB-D">
+<div class="line-header">B ↔ D</div>
+<div class="line-capacity">Cap: <span id="capB-D">120</span> MW</div>
+<div class="line-status" id="statusB-D">Normal</div>
+</div>
+<div class="transmission-line" id="lineC-D">
+<div class="line-header">C ↔ D</div>
+<div class="line-capacity">Cap: <span id="capC-D">90</span> MW</div>
+<div class="line-status" id="statusC-D">Normal</div>
+</div>
+</div>
+<div class="market-data" style="margin-top: 15px;">
+<div class="metric">
+<div class="metric-value" id="traderLoad">0</div>
+<div class="metric-label">Trader Load (MW)</div>
+</div>
+<div class="metric">
+<div class="metric-value" id="systemCongestion">0</div>
+<div class="metric-label">Congested Lines</div>
+</div>
+</div>
+<div class="congestion-warning" id="congestionWarning" style="display: none;">
                     ⚠️ Network congestion detected! Multiple transmission paths affected.
                 </div>
-            </div>
-        </div>
-
-        <div class="trading-forms">
-            <div class="card">
-                <h3>💰 Submit Trade</h3>
-                <form id="tradeForm">
-                    <div class="form-group">
-                        <label for="traderIdTrade">Trader ID:</label>
-                        <input type="text" id="traderIdTrade" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tradeRegion">Region:</label>
-                        <select id="tradeRegion">
-                            <option value="A">Zone A (North)</option>
-                            <option value="B">Zone B (East)</option>
-                            <option value="C">Zone C (South)</option>
-                            <option value="D">Zone D (West)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tradeMW">MW (+ to buy, - to sell):</label>
-                        <input type="number" id="tradeMW" step="0.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="tradePrice">Price ($/MWh):</label>
-                        <input type="number" id="tradePrice" step="0.01" required>
-                    </div>
-                    <button type="submit" class="btn">Submit Trade</button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h3>🔗 Buy Transmission</h3>
-                <form id="transmissionForm">
-                    <div class="form-group">
-                        <label for="traderIdTrans">Trader ID:</label>
-                        <input type="text" id="traderIdTrans" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="transmissionLine">Transmission Line:</label>
-                        <select id="transmissionLine" required>
-                            <option value="">Select Line</option>
-                            <option value="A-B">A ↔ B ($10/MW)</option>
-                            <option value="A-C">A ↔ C ($15/MW)</option>
-                            <option value="B-D">B ↔ D ($8/MW)</option>
-                            <option value="C-D">C ↔ D ($12/MW)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="transMW">Additional Capacity (MW):</label>
-                        <input type="number" id="transMW" step="0.1" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label id="transmissionCost">Select a line to see cost</label>
-                    </div>
-                    <button type="submit" class="btn btn-transmission">Buy Transmission</button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h3>🏭 Add Asset Block</h3>
-                <form id="assetForm">
-                    <div class="form-group">
-                        <label for="traderIdAsset">Trader ID:</label>
-                        <input type="text" id="traderIdAsset" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="assetRegion">Region:</label>
-                        <select id="assetRegion">
-                            <option value="A">Zone A (North)</option>
-                            <option value="B">Zone B (East)</option>
-                            <option value="C">Zone C (South)</option>
-                            <option value="D">Zone D (West)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="activationPrice">Activation Price ($/MWh):</label>
-                        <input type="number" id="activationPrice" step="0.01" required>
-                    </div>
-                    
-<div class="form-group">
-    <label for="assetType">Asset Type:</label>
-    <select id="assetType">
-        <option value="solar">Solar</option>
-        <option value="wind">Wind</option>
-        <option value="gas">Gas</option>
-    </select>
 </div>
-
-                    <div class="form-group">
-                        <label for="assetCapacity">Capacity (MW):</label>
-                        <input type="number" id="assetCapacity" step="0.1" min="0" required>
-                    </div>
-                    <button type="submit" class="btn btn-asset">Add Asset Block</button>
-                </form>
-            </div>
-        
+</div>
+<div class="trading-forms">
 <div class="card">
-    <h3>🚚 Send Power to Another Zone</h3>
-    <form id="powerTransferForm">
-        <div class="form-group">
-            <label for="fromRegion">From Region:</label>
-            <select id="fromRegion">
-                <option value="A">Zone A</option>
-                <option value="B">Zone B</option>
-                <option value="C">Zone C</option>
-                <option value="D">Zone D</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="toRegion">To Region:</label>
-            <select id="toRegion">
-                <option value="A">Zone A</option>
-                <option value="B">Zone B</option>
-                <option value="C">Zone C</option>
-                <option value="D">Zone D</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="transferMW">Power to Send (MW):</label>
-            <input type="number" id="transferMW" step="0.1" required>
-        </div>
-        <button type="submit" class="btn btn-transmission">Send Power</button>
-    </form>
+<h3>💰 Submit Trade</h3>
+<form id="tradeForm">
+<div class="form-group">
+
+
 </div>
+<div class="form-group">
+<label for="tradeRegion">Region:</label>
+<select id="tradeRegion">
+<option value="A">Zone A (North)</option>
+<option value="B">Zone B (East)</option>
+<option value="C">Zone C (South)</option>
+<option value="D">Zone D (West)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="tradeMW">MW (+ to buy, - to sell):</label>
+<input id="tradeMW" required="" step="0.1" type="number"/>
+</div>
+<div class="form-group">
+<label for="tradePrice">Price ($/MWh):</label>
+<input id="tradePrice" required="" step="0.01" type="number"/>
+</div>
+<button class="btn" type="submit">Submit Trade</button>
+</form>
+</div>
+<div class="card">
+<h3>🔗 Buy Transmission</h3>
+<form id="transmissionForm">
+<div class="form-group">
 
 
-        <div class="card forecast-section">
-            <h3>📅 7-Day Forecast</h3>
-            <div class="region-selector">
-                <label for="forecastRegion">Forecast Region:</label>
-                <select id="forecastRegion">
-                    <option value="A">Zone A (North)</option>
-                    <option value="B">Zone B (East)</option>
-                    <option value="C">Zone C (South)</option>
-                    <option value="D">Zone D (West)</option>
-                </select>
-                <button id="getForecast" class="btn" style="width: auto; margin-left: 10px;">Get Forecast</button>
-            </div>
-            <div id="forecastData" class="forecast-data">
-                Click "Get Forecast" to view 7-day hourly forecasts for demand, solar, and wind generation.
-            </div>
-        </div>
+</div>
+<div class="form-group">
+<label for="transmissionLine">Transmission Line:</label>
+<select id="transmissionLine" required="">
+<option value="">Select Line</option>
+<option value="A-B">A ↔ B ($10/MW)</option>
+<option value="A-C">A ↔ C ($15/MW)</option>
+<option value="B-D">B ↔ D ($8/MW)</option>
+<option value="C-D">C ↔ D ($12/MW)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="transMW">Additional Capacity (MW):</label>
+<input id="transMW" min="0" required="" step="0.1" type="number"/>
+</div>
+<div class="form-group">
+<label id="transmissionCost">Select a line to see cost</label>
+</div>
+<button class="btn btn-transmission" type="submit">Buy Transmission</button>
+</form>
+</div>
+<div class="card">
+<h3>🏭 Add Asset Block</h3>
+<form id="assetForm">
+<div class="form-group">
 
-        <div class="card trader-info">
-            <h3>👤 Trader Information</h3>
-            <div class="form-group">
-                <label for="traderIdInfo">Trader ID:</label>
-                <input type="text" id="traderIdInfo" placeholder="Enter trader ID to view info">
-                <button id="getTraderInfo" class="btn" style="width: auto; margin-top: 10px;">Get Trader Info</button>
+
+</div>
+<div class="form-group">
+<label for="assetRegion">Region:</label>
+<select id="assetRegion">
+<option value="A">Zone A (North)</option>
+<option value="B">Zone B (East)</option>
+<option value="C">Zone C (South)</option>
+<option value="D">Zone D (West)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="activationPrice">Activation Price ($/MWh):</label>
+<input id="activationPrice" required="" step="0.01" type="number"/>
+</div>
+<div class="form-group">
+<label for="assetType">Asset Type:</label>
+<select id="assetType">
+<option value="solar">Solar</option>
+<option value="wind">Wind</option>
+<option value="gas">Gas</option>
+</select>
+</div>
+<div class="form-group">
+<label for="assetCapacity">Capacity (MW):</label>
+<input id="assetCapacity" min="0" required="" step="0.1" type="number"/>
+</div>
+<button class="btn btn-asset" type="submit">Add Asset Block</button>
+</form>
+</div>
+<div class="card">
+<h3>🚚 Send Power to Another Zone</h3>
+<form id="powerTransferForm">
+<div class="form-group">
+<label for="fromRegion">From Region:</label>
+<select id="fromRegion">
+<option value="A">Zone A</option>
+<option value="B">Zone B</option>
+<option value="C">Zone C</option>
+<option value="D">Zone D</option>
+</select>
+</div>
+<div class="form-group">
+<label for="toRegion">To Region:</label>
+<select id="toRegion">
+<option value="A">Zone A</option>
+<option value="B">Zone B</option>
+<option value="C">Zone C</option>
+<option value="D">Zone D</option>
+</select>
+</div>
+<div class="form-group">
+<label for="transferMW">Power to Send (MW):</label>
+<input id="transferMW" required="" step="0.1" type="number"/>
+</div>
+<button class="btn btn-transmission" type="submit">Send Power</button>
+</form>
+</div>
+<div class="card forecast-section">
+<h3>📅 24-Hour Forecast</h3>
+<div class="region-selector">
+<label for="forecastRegion">Forecast Region:</label>
+<select id="forecastRegion">
+<option value="A">Zone A (North)</option>
+<option value="B">Zone B (East)</option>
+<option value="C">Zone C (South)</option>
+<option value="D">Zone D (West)</option>
+</select>
+<button class="btn" id="getForecast" style="width: auto; margin-left: 10px;">Get Forecast</button>
+</div>
+<canvas height="300" id="forecastChart" style="margin-top: 20px;" width="600"></canvas>
+</div>
+<div class="card trader-info">
+<h3>👤 Trader Information</h3>
+<div class="form-group">
+
+
+<button class="btn" id="getTraderInfo" style="width: auto; margin-top: 10px;">Get Trader Info</button>
+</div>
+<div id="traderPnL" style="margin-top: 15px;">
+<strong>P&amp;L:</strong> $0.00
             </div>
-            <div id="traderPnL" style="margin-top: 15px;">
-                <strong>P&L:</strong> $0.00
-            </div>
-            <div class="asset-blocks">
-                <h4>Asset Blocks:</h4>
-                <div id="assetBlocksList">
+<div class="asset-blocks">
+<h4>Asset Blocks:</h4>
+<div id="assetBlocksList">
                     No asset blocks found.
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
+</div>
+</div>
+</div>
+<script>
         // Simulation state
         let currentHour = 1;
         let currentRegion = 'A';
@@ -610,14 +597,14 @@
                 const lineKey2 = `${to}-${from}`;
                 const lineKey = transmissionLines[lineKey1] ? lineKey1 : (transmissionLines[lineKey2] ? lineKey2 : null);
 
-                if (!lineKey || transmissionLines[lineKey].capacity < mw) {
+                if (!lineKey || transmissionLines[lineKey].capacity < mw || !traders["default"]?.lines?.includes(lineKey)) {
                     alert("Insufficient transmission capacity!");
                     return;
                 }
 
                 const priceDiff = simulationData[to].lmp - simulationData[from].lmp;
                 const profit = priceDiff * mw;
-                if (!traders['default']) traders['default'] = { pnl: 0 };
+                if (!traders['default']) traders['default'] = { pnl: 0, lines: [] };
                 traders['default'].pnl += profit;
                 simulationData[from].traderLoad += mw;
                 simulationData[to].traderLoad -= mw;
@@ -869,6 +856,7 @@
             
             // Add capacity to the specific line
             line.capacity += mw;
+    if (!traders['default'].lines.includes(lineKey)) traders['default'].lines.push(lineKey);
             
             // Reset form
             e.target.reset();
@@ -963,6 +951,40 @@
 
         // Initialize the simulation
         initSimulation();
-    </script>
-</body>
+    
+let forecastChart = null;
+
+function getForecast() {
+    const region = document.getElementById('forecastRegion').value;
+    const hours = [...Array(24).keys()].map(i => `Hr ${i+1}`);
+    const demand = [];
+    const solar = [];
+    const wind = [];
+
+    for (let hour = 1; hour <= 24; hour++) {
+        demand.push(Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12)));
+        solar.push((hour >= 6 && hour <= 18) ? Math.round(200 * Math.sin((hour - 6) * Math.PI / 12)) : 0);
+        wind.push(Math.round(Math.random() * 150));
+    }
+
+    if (forecastChart) forecastChart.destroy();
+    const ctx = document.getElementById('forecastChart').getContext('2d');
+    forecastChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: hours,
+            datasets: [
+                { label: 'Demand (MW)', data: demand, borderColor: 'yellow', fill: false },
+                { label: 'Solar (MW)', data: solar, borderColor: 'orange', fill: false },
+                { label: 'Wind (MW)', data: wind, borderColor: 'lightblue', fill: false }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+}
+</script>
+</div></body>
 </html>
