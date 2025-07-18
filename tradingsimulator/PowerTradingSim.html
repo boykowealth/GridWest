@@ -1,0 +1,968 @@
+        function getForecast() {
+            const region = document.getElementById('forecastRegion').value;
+            const regionName = simulationData[region].name;
+            let forecastText = `7-Day Forecast for Zone ${region} (${regionName}):\n\n`;
+            
+            for (let day = 1; day <= 7; day++) {
+                forecastText += `Day ${day}:\n`;
+                for (let hour = 1; hour <= 24; hour++) {
+                    let demand;
+                    switch(region) {
+                        case 'A':
+                            demand = Math.round(600 + 350 * Math.sin((hour - 3) * Math.PI / 12));
+                            break;
+                        case 'B':
+                            demand = Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12));
+                            break<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Power Trading Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .time-display {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .region-selector {
+            margin: 20px 0;
+        }
+
+        .region-selector select {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .market-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .trading-forms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffd700;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-transmission {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .btn-transmission:hover {
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .btn-asset {
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
+        }
+
+        .btn-asset:hover {
+            box-shadow: 0 5px 15px rgba(254, 202, 87, 0.4);
+        }
+
+        .forecast-section {
+            margin-top: 30px;
+        }
+
+        .forecast-data {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .trader-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .asset-blocks {
+            margin-top: 20px;
+        }
+
+        .asset-block {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .asset-block.dispatched {
+            border-left-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.2);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .status-online {
+            background: #4ecdc4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.6);
+        }
+
+        .transmission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .transmission-line {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .transmission-line.congested {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .line-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffd700;
+        }
+
+        .line-capacity {
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .line-status {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .congestion-warning {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .price-chart {
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .trading-forms {
+                grid-template-columns: 1fr;
+            }
+            
+            .market-data {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Real-Time Power Trading Simulator</h1>
+            <div class="time-display">
+                <span class="status-indicator status-online"></span>
+                Hour Ending: <span id="currentHour">1</span> / 24
+            </div>
+            <div class="region-selector">
+                <label for="regionSelect">Select Region:</label>
+                <select id="regionSelect">
+                    <option value="A">Zone A (North)</option>
+                    <option value="B">Zone B (East)</option>
+                    <option value="C">Zone C (South)</option>
+                    <option value="D">Zone D (West)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>📊 Market Data - <span id="currentRegion">Zone A</span></h3>
+                <div class="market-data">
+                    <div class="metric">
+                        <div class="metric-value" id="demand">0</div>
+                        <div class="metric-label">Demand (MW)</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="solar">0</div>
+                        <div class="metric-label">Solar (MW)</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="wind">0</div>
+                        <div class="metric-label">Wind (MW)</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="lmp">$0</div>
+                        <div class="metric-label">LMP ($/MWh)</div>
+                    </div>
+                </div>
+                <div class="price-chart" id="priceChart">
+                    📈 Real-time Price Visualization
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🔌 Transmission Network</h3>
+                <div class="transmission-grid">
+                    <div class="transmission-line" id="lineA-B">
+                        <div class="line-header">A ↔ B</div>
+                        <div class="line-capacity">Cap: <span id="capA-B">100</span> MW</div>
+                        <div class="line-status" id="statusA-B">Normal</div>
+                    </div>
+                    <div class="transmission-line" id="lineA-C">
+                        <div class="line-header">A ↔ C</div>
+                        <div class="line-capacity">Cap: <span id="capA-C">80</span> MW</div>
+                        <div class="line-status" id="statusA-C">Normal</div>
+                    </div>
+                    <div class="transmission-line" id="lineB-D">
+                        <div class="line-header">B ↔ D</div>
+                        <div class="line-capacity">Cap: <span id="capB-D">120</span> MW</div>
+                        <div class="line-status" id="statusB-D">Normal</div>
+                    </div>
+                    <div class="transmission-line" id="lineC-D">
+                        <div class="line-header">C ↔ D</div>
+                        <div class="line-capacity">Cap: <span id="capC-D">90</span> MW</div>
+                        <div class="line-status" id="statusC-D">Normal</div>
+                    </div>
+                </div>
+                <div class="market-data" style="margin-top: 15px;">
+                    <div class="metric">
+                        <div class="metric-value" id="traderLoad">0</div>
+                        <div class="metric-label">Trader Load (MW)</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="systemCongestion">0</div>
+                        <div class="metric-label">Congested Lines</div>
+                    </div>
+                </div>
+                <div id="congestionWarning" class="congestion-warning" style="display: none;">
+                    ⚠️ Network congestion detected! Multiple transmission paths affected.
+                </div>
+            </div>
+        </div>
+
+        <div class="trading-forms">
+            <div class="card">
+                <h3>💰 Submit Trade</h3>
+                <form id="tradeForm">
+                    <div class="form-group">
+                        <label for="traderIdTrade">Trader ID:</label>
+                        <input type="text" id="traderIdTrade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tradeRegion">Region:</label>
+                        <select id="tradeRegion">
+                            <option value="A">Zone A (North)</option>
+                            <option value="B">Zone B (East)</option>
+                            <option value="C">Zone C (South)</option>
+                            <option value="D">Zone D (West)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tradeMW">MW (+ to buy, - to sell):</label>
+                        <input type="number" id="tradeMW" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tradePrice">Price ($/MWh):</label>
+                        <input type="number" id="tradePrice" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn">Submit Trade</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>🔗 Buy Transmission</h3>
+                <form id="transmissionForm">
+                    <div class="form-group">
+                        <label for="traderIdTrans">Trader ID:</label>
+                        <input type="text" id="traderIdTrans" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transmissionLine">Transmission Line:</label>
+                        <select id="transmissionLine" required>
+                            <option value="">Select Line</option>
+                            <option value="A-B">A ↔ B ($10/MW)</option>
+                            <option value="A-C">A ↔ C ($15/MW)</option>
+                            <option value="B-D">B ↔ D ($8/MW)</option>
+                            <option value="C-D">C ↔ D ($12/MW)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transMW">Additional Capacity (MW):</label>
+                        <input type="number" id="transMW" step="0.1" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="transmissionCost">Select a line to see cost</label>
+                    </div>
+                    <button type="submit" class="btn btn-transmission">Buy Transmission</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>🏭 Add Asset Block</h3>
+                <form id="assetForm">
+                    <div class="form-group">
+                        <label for="traderIdAsset">Trader ID:</label>
+                        <input type="text" id="traderIdAsset" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assetRegion">Region:</label>
+                        <select id="assetRegion">
+                            <option value="A">Zone A (North)</option>
+                            <option value="B">Zone B (East)</option>
+                            <option value="C">Zone C (South)</option>
+                            <option value="D">Zone D (West)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="activationPrice">Activation Price ($/MWh):</label>
+                        <input type="number" id="activationPrice" step="0.01" required>
+                    </div>
+                    
+<div class="form-group">
+    <label for="assetType">Asset Type:</label>
+    <select id="assetType">
+        <option value="solar">Solar</option>
+        <option value="wind">Wind</option>
+        <option value="gas">Gas</option>
+    </select>
+</div>
+
+                    <div class="form-group">
+                        <label for="assetCapacity">Capacity (MW):</label>
+                        <input type="number" id="assetCapacity" step="0.1" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-asset">Add Asset Block</button>
+                </form>
+            </div>
+        
+<div class="card">
+    <h3>🚚 Send Power to Another Zone</h3>
+    <form id="powerTransferForm">
+        <div class="form-group">
+            <label for="fromRegion">From Region:</label>
+            <select id="fromRegion">
+                <option value="A">Zone A</option>
+                <option value="B">Zone B</option>
+                <option value="C">Zone C</option>
+                <option value="D">Zone D</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="toRegion">To Region:</label>
+            <select id="toRegion">
+                <option value="A">Zone A</option>
+                <option value="B">Zone B</option>
+                <option value="C">Zone C</option>
+                <option value="D">Zone D</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="transferMW">Power to Send (MW):</label>
+            <input type="number" id="transferMW" step="0.1" required>
+        </div>
+        <button type="submit" class="btn btn-transmission">Send Power</button>
+    </form>
+</div>
+
+
+        <div class="card forecast-section">
+            <h3>📅 7-Day Forecast</h3>
+            <div class="region-selector">
+                <label for="forecastRegion">Forecast Region:</label>
+                <select id="forecastRegion">
+                    <option value="A">Zone A (North)</option>
+                    <option value="B">Zone B (East)</option>
+                    <option value="C">Zone C (South)</option>
+                    <option value="D">Zone D (West)</option>
+                </select>
+                <button id="getForecast" class="btn" style="width: auto; margin-left: 10px;">Get Forecast</button>
+            </div>
+            <div id="forecastData" class="forecast-data">
+                Click "Get Forecast" to view 7-day hourly forecasts for demand, solar, and wind generation.
+            </div>
+        </div>
+
+        <div class="card trader-info">
+            <h3>👤 Trader Information</h3>
+            <div class="form-group">
+                <label for="traderIdInfo">Trader ID:</label>
+                <input type="text" id="traderIdInfo" placeholder="Enter trader ID to view info">
+                <button id="getTraderInfo" class="btn" style="width: auto; margin-top: 10px;">Get Trader Info</button>
+            </div>
+            <div id="traderPnL" style="margin-top: 15px;">
+                <strong>P&L:</strong> $0.00
+            </div>
+            <div class="asset-blocks">
+                <h4>Asset Blocks:</h4>
+                <div id="assetBlocksList">
+                    No asset blocks found.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulation state
+        let currentHour = 1;
+        let currentRegion = 'A';
+        let simulationData = {
+            A: { demand: 0, solar: 0, wind: 0, lmp: 0, traderLoad: 0, name: 'North' },
+            B: { demand: 0, solar: 0, wind: 0, lmp: 0, traderLoad: 0, name: 'East' },
+            C: { demand: 0, solar: 0, wind: 0, lmp: 0, traderLoad: 0, name: 'South' },
+            D: { demand: 0, solar: 0, wind: 0, lmp: 0, traderLoad: 0, name: 'West' }
+        };
+        
+        // Transmission network with different costs per line
+        let transmissionLines = {
+            'A-B': { capacity: 100, baseCap: 100, cost: 10 },
+            'A-C': { capacity: 80, baseCap: 80, cost: 15 },
+            'B-D': { capacity: 120, baseCap: 120, cost: 8 },
+            'C-D': { capacity: 90, baseCap: 90, cost: 12 }
+        };
+        
+        let traders = {};
+        let assetBlocks = [];
+        let priceHistory = { A: [], B: [], C: [], D: [] };
+
+        // DOM elements
+        const currentHourEl = document.getElementById('currentHour');
+        const regionSelect = document.getElementById('regionSelect');
+        const currentRegionEl = document.getElementById('currentRegion');
+        const demandEl = document.getElementById('demand');
+        const solarEl = document.getElementById('solar');
+        const windEl = document.getElementById('wind');
+        const lmpEl = document.getElementById('lmp');
+        const traderLoadEl = document.getElementById('traderLoad');
+        const congestionWarningEl = document.getElementById('congestionWarning');
+        const transmissionLineSelect = document.getElementById('transmissionLine');
+        const transmissionCostEl = document.getElementById('transmissionCost');
+
+        // Initialize simulation
+        function initSimulation() {
+            // Start simulation timer
+            setInterval(updateSimulation, 60000);
+            
+            // Initialize data
+            updateSimulation();
+            
+            // Setup event listeners
+            document.getElementById('powerTransferForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const from = document.getElementById('fromRegion').value;
+                const to = document.getElementById('toRegion').value;
+                const mw = parseFloat(document.getElementById('transferMW').value);
+
+                if (from === to) {
+                    alert("Cannot transfer to the same region.");
+                    return;
+                }
+
+                const lineKey1 = `${from}-${to}`;
+                const lineKey2 = `${to}-${from}`;
+                const lineKey = transmissionLines[lineKey1] ? lineKey1 : (transmissionLines[lineKey2] ? lineKey2 : null);
+
+                if (!lineKey || transmissionLines[lineKey].capacity < mw) {
+                    alert("Insufficient transmission capacity!");
+                    return;
+                }
+
+                const priceDiff = simulationData[to].lmp - simulationData[from].lmp;
+                const profit = priceDiff * mw;
+                if (!traders['default']) traders['default'] = { pnl: 0 };
+                traders['default'].pnl += profit;
+                simulationData[from].traderLoad += mw;
+                simulationData[to].traderLoad -= mw;
+                alert(`Power sent! Profit: $${profit.toFixed(2)}`);
+                updateDisplay();
+            });
+
+            setupEventListeners();
+            
+            // Update display
+            updateDisplay();
+        }
+
+        function setupEventListeners() {
+            regionSelect.addEventListener('change', (e) => {
+                currentRegion = e.target.value;
+                updateDisplay();
+            });
+
+            transmissionLineSelect.addEventListener('change', (e) => {
+                const lineKey = e.target.value;
+                if (lineKey && transmissionLines[lineKey]) {
+                    const cost = transmissionLines[lineKey].cost;
+                    transmissionCostEl.textContent = `Cost: ${cost}/MW`;
+                } else {
+                    transmissionCostEl.textContent = 'Select a line to see cost';
+                }
+            });
+
+            document.getElementById('tradeForm').addEventListener('submit', submitTrade);
+            document.getElementById('transmissionForm').addEventListener('submit', buyTransmission);
+            document.getElementById('assetForm').addEventListener('submit', addAssetBlock);
+            document.getElementById('getForecast').addEventListener('click', getForecast);
+            document.getElementById('getTraderInfo').addEventListener('click', getTraderInfo);
+        }
+
+        function updateSimulation() {
+            // Advance time
+            currentHour = (currentHour % 24) + 1;
+            
+            // Update market data for all regions
+            updateMarketData('A');
+            updateMarketData('B');
+            updateMarketData('C');
+            updateMarketData('D');
+            
+            // Calculate transmission flows and congestion
+            calculateTransmissionFlows();
+            
+            // Process asset blocks
+            processAssetBlocks();
+            
+            // Update display
+            updateDisplay();
+        }
+
+        function updateMarketData(region) {
+            const hour = currentHour;
+            const data = simulationData[region];
+            
+            // Different demand patterns for each region
+            switch(region) {
+                case 'A': // North - Industrial, early morning peak
+                    data.demand = Math.round(600 + 350 * Math.sin((hour - 3) * Math.PI / 12));
+                    break;
+                case 'B': // East - Commercial, midday peak
+                    data.demand = Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12));
+                    break;
+                case 'C': // South - Residential, evening peak
+                    data.demand = Math.round(450 + 250 * Math.sin((hour + 3) * Math.PI / 12));
+                    break;
+                case 'D': // West - Mixed, late evening peak
+                    data.demand = Math.round(400 + 200 * Math.cos((hour - 1) * Math.PI / 12));
+                    break;
+            }
+            
+            // Solar generation varies by region (South has more solar)
+            if (hour >= 6 && hour <= 18) {
+                const solarMultiplier = region === 'C' ? 1.5 : (region === 'D' ? 1.2 : 1.0);
+                data.solar = Math.round(150 * solarMultiplier * Math.sin((hour - 6) * Math.PI / 12));
+            } else {
+                data.solar = 0;
+            }
+            
+            // Wind generation varies by region (North and West have more wind)
+            const windMultiplier = (region === 'A' || region === 'D') ? 1.3 : 1.0;
+            if (Math.random() < 0.25) {
+                data.wind = Math.round(Math.random() * 120 * windMultiplier);
+            } else {
+                data.wind = Math.round(data.wind * 0.85);
+            }
+            
+            // Base thermal generation varies by region
+            const baseThermal = { A: 400, B: 300, C: 250, D: 350 };
+            
+            // Calculate net demand
+            const netDemand = data.demand + data.traderLoad;
+            const supply = data.solar + data.wind + baseThermal[region];
+            
+            // Calculate LMP with regional variations
+            const deficit = netDemand - supply;
+            const basePrice = { A: 45, B: 55, C: 50, D: 48 };
+            data.lmp = Math.max(0, basePrice[region] + deficit * 0.4);
+            
+            // Add to price history
+            priceHistory[region].push(data.lmp);
+            if (priceHistory[region].length > 24) {
+                priceHistory[region].shift();
+            }
+        }
+        
+        function calculateTransmissionFlows() {
+            // Calculate required flows between regions based on price differences
+            const regions = ['A', 'B', 'C', 'D'];
+            let congestedLines = 0;
+            
+            // Check each transmission line
+            Object.keys(transmissionLines).forEach(lineKey => {
+                const [from, to] = lineKey.split('-');
+                const line = transmissionLines[lineKey];
+                
+                // Calculate price difference
+                const priceDiff = simulationData[from].lmp - simulationData[to].lmp;
+                
+                // Estimate required flow (simplified model)
+                const requiredFlow = Math.abs(priceDiff * 2); // Simplified flow calculation
+                
+                // Check congestion
+                const isCongestedNow = requiredFlow > line.capacity;
+                const lineElement = document.getElementById(`line${lineKey}`);
+                const statusElement = document.getElementById(`status${lineKey}`);
+                
+                if (isCongestedNow) {
+                    congestedLines++;
+                    lineElement.classList.add('congested');
+                    statusElement.textContent = 'Congested';
+                    statusElement.style.color = '#ff6b6b';
+                    
+                    // Apply congestion pricing
+                    const congestionFactor = requiredFlow / line.capacity;
+                    simulationData[from].lmp *= (1 + congestionFactor * 0.1);
+                    simulationData[to].lmp *= (1 + congestionFactor * 0.1);
+                } else {
+                    lineElement.classList.remove('congested');
+                    statusElement.textContent = 'Normal';
+                    statusElement.style.color = '#4ecdc4';
+                }
+                
+                // Update capacity display
+                document.getElementById(`cap${lineKey}`).textContent = line.capacity;
+            });
+            
+            // Update congestion warning
+            document.getElementById('systemCongestion').textContent = congestedLines;
+            if (congestedLines > 0) {
+                congestionWarningEl.style.display = 'block';
+            } else {
+                congestionWarningEl.style.display = 'none';
+            }
+        }
+
+        function processAssetBlocks() {
+            assetBlocks.forEach(asset => {
+                const regionData = simulationData[asset.region];
+                const isDispatched = regionData.lmp >= asset.activationPrice;
+                
+                if (isDispatched && !asset.dispatched) {
+                    asset.dispatched = true;
+                    // Add P&L for activation
+                    if (!traders[asset.traderId]) {
+                        traders[asset.traderId] = { pnl: 0 };
+                    }
+                    traders[asset.traderId].pnl += asset.capacity * (regionData.lmp - asset.activationPrice);
+                } else if (!isDispatched) {
+                    asset.dispatched = false;
+                }
+            });
+        }
+
+        function updateDisplay() {
+            // Update time
+            currentHourEl.textContent = currentHour;
+            
+            // Update region display
+            const regionName = simulationData[currentRegion].name;
+            currentRegionEl.textContent = `Zone ${currentRegion} (${regionName})`;
+            
+            // Update market data
+            const data = simulationData[currentRegion];
+            demandEl.textContent = data.demand;
+            solarEl.textContent = data.solar;
+            windEl.textContent = data.wind;
+            lmpEl.textContent = `${data.lmp.toFixed(2)}`;
+            traderLoadEl.textContent = data.traderLoad;
+        }
+
+        function submitTrade(e) {
+            e.preventDefault();
+            
+            const traderId = 'default';
+            const region = document.getElementById('tradeRegion').value;
+            const mw = parseFloat(document.getElementById('tradeMW').value);
+            const price = parseFloat(document.getElementById('tradePrice').value);
+            
+            // Initialize trader if not exists
+            if (!traders[traderId]) {
+                traders[traderId] = { pnl: 0 };
+            }
+            
+            // Execute trade
+            const marketPrice = simulationData[region].lmp;
+            const pnl = mw * (marketPrice - price);
+            traders[traderId].pnl += pnl;
+            
+            // Update trader load
+            simulationData[region].traderLoad += mw;
+            
+            // Reset form
+            e.target.reset();
+            
+            // Show confirmation
+            alert(`Trade submitted! P&L: $${pnl.toFixed(2)}`);
+            
+            updateDisplay();
+        }
+
+        function buyTransmission(e) {
+            e.preventDefault();
+            
+            const traderId = 'default';
+            const lineKey = document.getElementById('transmissionLine').value;
+            const mw = parseFloat(document.getElementById('transMW').value);
+            
+            if (!lineKey) {
+                alert('Please select a transmission line!');
+                return;
+            }
+            
+            const line = transmissionLines[lineKey];
+            const cost = mw * line.cost;
+            
+            // Initialize trader if not exists
+            if (!traders[traderId]) {
+                traders[traderId] = { pnl: 0 };
+            }
+            
+            // Deduct cost
+            traders[traderId].pnl -= cost;
+            
+            // Add capacity to the specific line
+            line.capacity += mw;
+            
+            // Reset form
+            e.target.reset();
+            transmissionCostEl.textContent = 'Select a line to see cost';
+            
+            // Show confirmation
+            alert(`Transmission purchased on line ${lineKey}!\nCapacity: +${mw} MW\nCost: ${cost.toFixed(2)}`);
+            
+            updateDisplay();
+        }
+
+        function addAssetBlock(e) {
+            e.preventDefault();
+            
+            const traderId = 'default';
+            const region = document.getElementById('assetRegion').value;
+            const activationPrice = parseFloat(document.getElementById('activationPrice').value);
+            const capacity = parseFloat(document.getElementById('assetCapacity').value);
+            
+            // Add asset block
+            const type = document.getElementById('assetType').value;
+            assetBlocks.push({
+                type,
+                traderId,
+                region,
+                activationPrice,
+                capacity,
+                dispatched: false
+            });
+            
+            // Reset form
+            e.target.reset();
+            
+            // Show confirmation
+            alert(`Asset block added! Capacity: ${capacity} MW`);
+        }
+
+        function getForecast() {
+            const region = document.getElementById('forecastRegion').value;
+            let forecastText = `7-Day Forecast for Zone ${region}:\n\n`;
+            
+            for (let day = 1; day <= 7; day++) {
+                forecastText += `Day ${day}:\n`;
+                for (let hour = 1; hour <= 24; hour++) {
+                    const demand = region === 'A' ? 
+                        Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12)) :
+                        Math.round(400 + 200 * Math.cos((hour - 1) * Math.PI / 12));
+                    
+                    const solar = (hour >= 6 && hour <= 18) ? 
+                        Math.round(200 * Math.sin((hour - 6) * Math.PI / 12)) : 0;
+                    
+                    const wind = Math.round(Math.random() * 150);
+                    
+                    forecastText += `  Hour ${hour}: Demand=${demand}MW, Solar=${solar}MW, Wind=${wind}MW\n`;
+                }
+                forecastText += '\n';
+            }
+            
+            document.getElementById('forecastData').textContent = forecastText;
+        }
+
+        function getTraderInfo() {
+            const traderId = 'default';
+            if (!traderId) return;
+            
+            const trader = traders[traderId];
+            const pnl = trader ? trader.pnl : 0;
+            
+            document.getElementById('traderPnL').innerHTML = `<strong>P&L:</strong> $${pnl.toFixed(2)}`;
+            
+            // Show asset blocks
+            const traderAssets = assetBlocks.filter(asset => asset.traderId === traderId);
+            const assetBlocksList = document.getElementById('assetBlocksList');
+            
+            if (traderAssets.length === 0) {
+                assetBlocksList.innerHTML = 'No asset blocks found.';
+            } else {
+                assetBlocksList.innerHTML = '';
+                traderAssets.forEach((asset, index) => {
+                    const div = document.createElement('div');
+                    div.className = `asset-block ${asset.dispatched ? 'dispatched' : ''}`;
+                    div.innerHTML = `
+                        <strong>Asset ${index + 1}</strong> - Zone ${asset.region}<br>
+                        Capacity: ${asset.capacity} MW<br>
+                        Activation Price: $${asset.activationPrice.toFixed(2)}/MWh<br>
+                        Type: ${asset.type}<br>Status: ${asset.dispatched ? '✅ Dispatched' : '⏸️ Standby'}
+                    `;
+                    assetBlocksList.appendChild(div);
+                });
+            }
+        }
+
+        // Initialize the simulation
+        initSimulation();
+    </script>
+</body>
+</html>
