@@ -13,7 +13,13 @@
                             break;
                         case 'B':
                             demand = Math.round(500 + 300 * Math.sin((hour - 1) * Math.PI / 12));
-                            break<!DOCTYPE html>
+                            break
+                    }
+                }
+            }
+        }    
+            
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -392,8 +398,6 @@
 <h3>💰 Submit Trade</h3>
 <form id="tradeForm">
 <div class="form-group">
-
-
 </div>
 <div class="form-group">
 <label for="tradeRegion">Region:</label>
@@ -419,8 +423,6 @@
 <h3>🔗 Buy Transmission</h3>
 <form id="transmissionForm">
 <div class="form-group">
-
-
 </div>
 <div class="form-group">
 <label for="transmissionLine">Transmission Line:</label>
@@ -446,8 +448,6 @@
 <h3>🏭 Add Asset Block</h3>
 <form id="assetForm">
 <div class="form-group">
-
-
 </div>
 <div class="form-group">
 <label for="assetRegion">Region:</label>
@@ -522,8 +522,6 @@
 <div class="card trader-info">
 <h3>👤 Trader Information</h3>
 <div class="form-group">
-
-
 <button class="btn" id="getTraderInfo" style="width: auto; margin-top: 10px;">Get Trader Info</button>
 </div>
 <div id="traderPnL" style="margin-top: 15px;">
@@ -559,6 +557,7 @@
         let traders = {};
         let assetBlocks = [];
         let priceHistory = { A: [], B: [], C: [], D: [] };
+let regionAssetMW = { A: 0, B: 0, C: 0, D: 0 };
 
         // DOM elements
         const currentHourEl = document.getElementById('currentHour');
@@ -584,6 +583,7 @@
             // Setup event listeners
             document.getElementById('powerTransferForm').addEventListener('submit', function(e) {
                 e.preventDefault();
+                const traderId = 'default';
                 const from = document.getElementById('fromRegion').value;
                 const to = document.getElementById('toRegion').value;
                 const mw = parseFloat(document.getElementById('transferMW').value);
@@ -597,17 +597,25 @@
                 const lineKey2 = `${to}-${from}`;
                 const lineKey = transmissionLines[lineKey1] ? lineKey1 : (transmissionLines[lineKey2] ? lineKey2 : null);
 
-                if (!lineKey || transmissionLines[lineKey].capacity < mw || !traders["default"]?.lines?.includes(lineKey)) {
-                    alert("Insufficient transmission capacity!");
-                    return;
-                }
+                if (!lineKey) {
+    alert("No valid transmission line between selected zones.");
+    return;
+}
+if (!traders[traderId] || !traders[traderId].lines || !traders[traderId].lines.includes(lineKey)) {
+    alert("You do not own transmission rights on this line.");
+    return;
+}
+if (transmissionLines[lineKey].capacity < mw) {
+    alert("Insufficient transmission capacity!");
+    return;
+}
 
                 const priceDiff = simulationData[to].lmp - simulationData[from].lmp;
                 const profit = priceDiff * mw;
-                if (!traders['default']) traders['default'] = { pnl: 0, lines: [] };
-                traders['default'].pnl += profit;
-                simulationData[from].traderLoad += mw;
-                simulationData[to].traderLoad -= mw;
+                if (!traders[traderId]) traders[traderId] = { pnl: 0, lines: [] };
+                traders[traderId].pnl += profit;
+                simulationData[from].traderLoad -= mw;
+                simulationData[to].traderLoad += mw;
                 alert(`Power sent! Profit: $${profit.toFixed(2)}`);
                 updateDisplay();
             });
@@ -637,6 +645,9 @@
             document.getElementById('tradeForm').addEventListener('submit', submitTrade);
             document.getElementById('transmissionForm').addEventListener('submit', buyTransmission);
             document.getElementById('assetForm').addEventListener('submit', addAssetBlock);
+
+            
+
             document.getElementById('getForecast').addEventListener('click', getForecast);
             document.getElementById('getTraderInfo').addEventListener('click', getTraderInfo);
         }
@@ -701,7 +712,7 @@
             const baseThermal = { A: 400, B: 300, C: 250, D: 350 };
             
             // Calculate net demand
-            const netDemand = data.demand + data.traderLoad;
+            const netDemand = data.demand + data.traderLoad - regionAssetMW[region];
             const supply = data.solar + data.wind + baseThermal[region];
             
             // Calculate LMP with regional variations
@@ -767,23 +778,24 @@
         }
 
         function processAssetBlocks() {
-            assetBlocks.forEach(asset => {
-                const regionData = simulationData[asset.region];
-                const isDispatched = regionData.lmp >= asset.activationPrice;
-                
-                if (isDispatched && !asset.dispatched) {
-                    asset.dispatched = true;
-                    // Add P&L for activation
-                    if (!traders[asset.traderId]) {
-                        traders[asset.traderId] = { pnl: 0 };
-                    }
-                    traders[asset.traderId].pnl += asset.capacity * (regionData.lmp - asset.activationPrice);
-                } else if (!isDispatched) {
-                    asset.dispatched = false;
-                }
-            });
-        }
+    regionAssetMW = { A: 0, B: 0, C: 0, D: 0 };
+    assetBlocks.forEach(asset => {
+        const region = asset.region;
+        const regionData = simulationData[region];
+        const threshold = asset.type === 'gas' ? asset.variableCost : asset.activationPrice;
+        const isDispatched = regionData.lmp >= threshold;
 
+        asset.dispatched = isDispatched;
+
+        if (isDispatched) {
+            regionAssetMW[region] += asset.capacity;
+            if (!traders[asset.traderId]) {
+                traders[asset.traderId] = { pnl: 0, lines: [] };
+            }
+            traders[asset.traderId].pnl += asset.capacity * (regionData.lmp - threshold);
+        }
+    });
+}
         function updateDisplay() {
             // Update time
             currentHourEl.textContent = currentHour;
@@ -811,12 +823,35 @@
             
             // Initialize trader if not exists
             if (!traders[traderId]) {
-                traders[traderId] = { pnl: 0 };
+                traders[traderId] = { pnl: 0, lines: [] };
             }
             
             // Execute trade
             const marketPrice = simulationData[region].lmp;
             const pnl = mw * (marketPrice - price);
+
+    // Validate buy/sell price against market LMP
+            if (mw > 0 && price < marketPrice) {
+                alert(`Buy price must be at least the market LMP ($${marketPrice.toFixed(2)}).`);
+                return;
+            }
+            if (mw < 0 && price > marketPrice) {
+                alert(`Sell price must not exceed the market LMP ($${marketPrice.toFixed(2)}).`);
+                return;
+            }
+            
+            if ((mw > 0 && price < marketPrice) || (mw < 0 && price > marketPrice)) {
+                alert("Buy at or above market price, sell at or below market price!");
+                return;
+            }
+if (mw > 0 && price < marketPrice) {
+    alert(`Buy price must be at least the market LMP ($${marketPrice.toFixed(2)}).`);
+    return;
+}
+if (mw < 0 && price > marketPrice) {
+    alert(`Sell price must not exceed the market LMP ($${marketPrice.toFixed(2)}).`);
+    return;
+}
             traders[traderId].pnl += pnl;
             
             // Update trader load
@@ -824,8 +859,7 @@
             
             // Reset form
             e.target.reset();
-            
-            // Show confirmation
+// Show confirmation
             alert(`Trade submitted! P&L: $${pnl.toFixed(2)}`);
             
             updateDisplay();
@@ -848,7 +882,7 @@
             
             // Initialize trader if not exists
             if (!traders[traderId]) {
-                traders[traderId] = { pnl: 0 };
+                traders[traderId] = { pnl: 0, lines: [] };
             }
             
             // Deduct cost
@@ -856,11 +890,11 @@
             
             // Add capacity to the specific line
             line.capacity += mw;
-    if (!traders['default'].lines.includes(lineKey)) traders['default'].lines.push(lineKey);
+    if (!traders[traderId].lines.includes(lineKey)) traders[traderId].lines.push(lineKey);
             
             // Reset form
             e.target.reset();
-            transmissionCostEl.textContent = 'Select a line to see cost';
+transmissionCostEl.textContent = 'Select a line to see cost';
             
             // Show confirmation
             alert(`Transmission purchased on line ${lineKey}!\nCapacity: +${mw} MW\nCost: ${cost.toFixed(2)}`);
@@ -873,24 +907,27 @@
             
             const traderId = 'default';
             const region = document.getElementById('assetRegion').value;
+            const type = document.getElementById('assetType').value;
             const activationPrice = parseFloat(document.getElementById('activationPrice').value);
+            
             const capacity = parseFloat(document.getElementById('assetCapacity').value);
             
+            const variableCost = type === 'gas' ? Math.round(40 + Math.random() * 30) : 0;
+            
             // Add asset block
-            const type = document.getElementById('assetType').value;
+            
             assetBlocks.push({
                 type,
                 traderId,
                 region,
                 activationPrice,
                 capacity,
-                dispatched: false
-            });
+                variableCost,
+                dispatched: false });
             
             // Reset form
             e.target.reset();
-            
-            // Show confirmation
+// Show confirmation
             alert(`Asset block added! Capacity: ${capacity} MW`);
         }
 
@@ -935,15 +972,30 @@
                 assetBlocksList.innerHTML = 'No asset blocks found.';
             } else {
                 assetBlocksList.innerHTML = '';
+                
+            // Delegated listeners for edit/delete
+            assetBlocksList.addEventListener('click', function(e) {
+                if (e.target.classList.contains('edit-btn')) {
+                    const idx = parseInt(e.target.getAttribute('data-index'));
+                    editAssetBlock(idx);
+                } else if (e.target.classList.contains('delete-btn')) {
+                    const idx = parseInt(e.target.getAttribute('data-index'));
+                    deleteAssetBlock(idx);
+                }
+            });
+
                 traderAssets.forEach((asset, index) => {
                     const div = document.createElement('div');
                     div.className = `asset-block ${asset.dispatched ? 'dispatched' : ''}`;
                     div.innerHTML = `
-                        <strong>Asset ${index + 1}</strong> - Zone ${asset.region}<br>
-                        Capacity: ${asset.capacity} MW<br>
-                        Activation Price: $${asset.activationPrice.toFixed(2)}/MWh<br>
-                        Type: ${asset.type}<br>Status: ${asset.dispatched ? '✅ Dispatched' : '⏸️ Standby'}
-                    `;
+    <strong>Asset ${index + 1}</strong> - Zone ${asset.region}<br>
+    Capacity: ${asset.capacity} MW<br>
+    Activation Price: $${asset.activationPrice.toFixed(2)}/MWh<br>
+    Variable Cost: $${asset.variableCost ? asset.variableCost.toFixed(2) : 'N/A'}/MWh<br>
+    Type: ${asset.type}<br>Status: ${asset.dispatched ? '✅ Dispatched' : '⏸️ Standby'}<br>
+    <button class="edit-btn" data-index="${index}">✏️ Edit</button>
+    <button class="delete-btn" data-index="${index}" style="margin-left:8px;">🗑️ Delete</button>
+`;
                     assetBlocksList.appendChild(div);
                 });
             }
@@ -985,6 +1037,26 @@ function getForecast() {
         }
     });
 }
+
+        function editAssetBlock(index) {
+            const asset = assetBlocks[index];
+            const newCap = parseFloat(prompt("New capacity (MW):", asset.capacity));
+            if (!isNaN(newCap)) asset.capacity = newCap;
+            const newAct = parseFloat(prompt("New activation price ($/MWh):", asset.activationPrice));
+            if (!isNaN(newAct)) asset.activationPrice = newAct;
+            if (asset.type === 'gas') {
+                const newVC = parseFloat(prompt("New variable cost ($/MWh):", asset.variableCost));
+                if (!isNaN(newVC)) asset.variableCost = newVC;
+            }
+            getTraderInfo();
+        }
+
+        function deleteAssetBlock(index) {
+            if (confirm("Delete this asset block?")) {
+                assetBlocks.splice(index, 1);
+                getTraderInfo();
+            }
+        }
 </script>
 </div></body>
 </html>
