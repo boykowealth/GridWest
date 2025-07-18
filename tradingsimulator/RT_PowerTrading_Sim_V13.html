@@ -792,7 +792,9 @@ if (transmissionLines[lineKey].capacity < mw) {
             if (!traders[asset.traderId]) {
                 traders[asset.traderId] = { pnl: 0, lines: [] };
             }
-            traders[asset.traderId].pnl += asset.capacity * (regionData.lmp - threshold);
+            const cost = asset.type === 'gas' ? asset.variableCost : asset.activationPrice;
+const profit = asset.capacity * (regionData.lmp - cost);
+traders[asset.traderId].pnl += profit;
         }
     });
 }
